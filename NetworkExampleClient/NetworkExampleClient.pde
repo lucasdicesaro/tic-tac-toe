@@ -3,7 +3,7 @@ import processing.net.*;
 Client myClient;
 String incoming;
 String outgoing;
-String valid = "abcdefghijklmnopqrstuvwxyz1234567890 !@#$%&/()=";
+String valid = "abcdefghijklmnopqrstuvwxyz1234567890 !@#$%&/()=?¿¡";
 
 void setup() {
     size(300, 300);
@@ -13,7 +13,7 @@ void setup() {
     incoming = "";
     outgoing = "";
     
-    myClient = new Client(this, "127.0.0.1", 1234);
+    myClient = new Client(this, "LA64", 1234);
 }
 
 void draw() {

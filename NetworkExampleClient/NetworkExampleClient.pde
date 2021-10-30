@@ -58,7 +58,7 @@ void draw() {
 void mousePressed() {
   int row = mouseY/100;
   int col = mouseX/100;
-  grid[row][col] = 1;
+  grid[row][col] = 2;
   outgoing = row + "," + col;
   myClient.write(outgoing);
 }

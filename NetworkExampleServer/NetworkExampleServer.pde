@@ -4,23 +4,30 @@ int[][] grid;
 Server myServer;
 String incoming;
 String outgoing;
+boolean myTurn = false;
 String valid = "abcdefghijklmnopqrstuvwxyz1234567890 !@#$%&/()=?¿¡";
 PImage x;
 PImage o;
 
 void setup() {
-    size(300, 300);
-    textAlign(CENTER, CENTER);
-    textSize(20);
-    
-    incoming = "";
-    outgoing = "";
-    
-    myServer = new Server(this, 1234);
-    
-    grid = new int[3][3];
-    x = loadImage("circle.png");
-    o = loadImage("cross.png");
+  size(300, 300);
+  textAlign(CENTER, CENTER);
+  textSize(20);
+  
+  incoming = "";
+  outgoing = "";
+  
+  myServer = new Server(this, 1234);
+  
+  grid = new int[3][3];
+  for (int i = 0; i < 3; i++) {
+    for (int j = 0; j < 3; j++) {
+      grid[i][j] = 0;
+    }
+  }
+  
+  x = loadImage("circle.png");
+  o = loadImage("cross.png");
 }
 
 void draw() {
@@ -51,26 +58,32 @@ void draw() {
   Client myClient = myServer.available();
   if (myClient != null) { 
     incoming = myClient.readString();
-    // row,col ex: 2,1
-    String rowString = incoming.substring(0,1);
-    String colString = incoming.substring(2,3);
-    int r = int(rowString);
-    int c = int(colString);
-    if (grid[r][c] != 1) {
-      grid[r][c] = 2;
-    }
+    if (!myTurn) {
+      // row,col ex: 2,1
+      String rowString = incoming.substring(0,1);
+      String colString = incoming.substring(2,3);
+      int r = int(rowString);
+      int c = int(colString);
+      if (grid[r][c] == 0) {
+        grid[r][c] = 2;
+        myTurn = true;
+      }
+    }      
   }
 }
 
 
 void mousePressed() {
-  int row = mouseY/100;
-  int col = mouseX/100;
-  if (grid[row][col] != 2) {
-    grid[row][col] = 1;
+  if (myTurn) {
+    int row = mouseY/100;
+    int col = mouseX/100;
+    if (grid[row][col] != 2) {
+      grid[row][col] = 1;
+      myTurn = false;
+    }
+    outgoing = row + "," + col;
+    myServer.write(outgoing);
   }
-  outgoing = row + "," + col;
-  myServer.write(outgoing);
 }
 
 /*

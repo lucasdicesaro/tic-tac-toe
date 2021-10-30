@@ -77,7 +77,7 @@ void mousePressed() {
   if (myTurn) {
     int row = mouseY/100;
     int col = mouseX/100;
-    if (grid[row][col] != 2) {
+    if (grid[row][col] == 0) {
       grid[row][col] = 1;
       myTurn = false;
     }

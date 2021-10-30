@@ -51,6 +51,12 @@ void draw() {
   Client myClient = myServer.available();
   if (myClient != null) { 
     incoming = myClient.readString();
+    // row,col ex: 2,1
+    String rowString = incoming.substring(0,1);
+    String colString = incoming.substring(2,3);
+    int r = int(rowString);
+    int c = int(colString);
+    grid[r][c] = 2;
   }
 }
 

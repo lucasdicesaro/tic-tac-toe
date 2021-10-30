@@ -56,7 +56,9 @@ void draw() {
     String colString = incoming.substring(2,3);
     int r = int(rowString);
     int c = int(colString);
-    grid[r][c] = 2;
+    if (grid[r][c] != 1) {
+      grid[r][c] = 2;
+    }
   }
 }
 
@@ -64,7 +66,9 @@ void draw() {
 void mousePressed() {
   int row = mouseY/100;
   int col = mouseX/100;
-  grid[row][col] = 1;
+  if (grid[row][col] != 2) {
+    grid[row][col] = 1;
+  }
   outgoing = row + "," + col;
   myServer.write(outgoing);
 }

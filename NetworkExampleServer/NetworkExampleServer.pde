@@ -35,8 +35,8 @@ void draw() {
   int col = 0;
   
   while (row < 3) {
-    if (grid[row][col] == 1) image(x, col*100, row*100, 100, 1);
-    if (grid[row][col] == 2) image(o, col*100, row*100, 100, 1);
+    if (grid[row][col] == 1) image(x, col*100, row*100, 100, 100);
+    if (grid[row][col] == 2) image(o, col*100, row*100, 100, 100);
     col++;
     if (col == 3) {
       col = 0;
@@ -54,12 +54,16 @@ void draw() {
   }
 }
 
-/*
-void mousePressed() {
-  myServer.write("HELLO!");
-}
-*/
 
+void mousePressed() {
+  int row = mouseY/100;
+  int col = mouseX/100;
+  grid[row][col] = 1;
+  outgoing = row + "," + col;
+  myServer.write(outgoing);
+}
+
+/*
 void keyPressed() {
   if (key == ENTER) {
     myServer.write(outgoing);
@@ -73,3 +77,4 @@ void keyPressed() {
     outgoing = outgoing + key;
   }
 }
+*/
